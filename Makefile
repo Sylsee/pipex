@@ -6,7 +6,7 @@
 #    By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 15:10:33 by spoliart          #+#    #+#              #
-#    Updated: 2021/09/05 03:16:58 by spoliart         ###   ########.fr        #
+#    Updated: 2021/09/06 04:05:16 by spoliart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,9 +61,4 @@ re:
 	@make fclean
 	@make
 
-norme:
-	@norminette includes srcs
-
-# @ARG=`ruby -e "puts (1..100).to_a.shuffle.join(' ')"` ; ./pipex $(ARG)
-# @ARG=`ruby -e "puts (1..100).to_a.shuffle.join(' ')"` ; time ./pipex $(ARG)
-# @ARG=`ruby -e "puts (1..100).to_a.shuffle.join(' ')"` ; ./pipex $(ARG) | wc -l
+.PHONY:	all $(NAME) clean fclean re

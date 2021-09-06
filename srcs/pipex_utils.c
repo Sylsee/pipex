@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 02:54:56 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/06 00:11:26 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/09/06 03:42:59 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,5 @@ char	*get_path(char *cmd, char **environ)
 	ft_free_tab(paths);
 	if (path)
 		return (path);
-	ft_putstr_fd(cmdCopy, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	exit(EXIT_FAILURE);
+	return (NULL);
 }

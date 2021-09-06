@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/06 03:30:58 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/09/06 03:48:39 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,52 @@
 
 void	child(int fd[2], int fd_infile, char **command, char **envp)
 {
-	char		*path;
+	int		err;
+	char	*path;
 
+	err = 1;
 	dup2(fd[1], 1);
 	dup2(fd_infile, 0);
 	close(fd[0]);
 	close(fd[1]);
 	path = get_path(command[0], envp);
-	execve(path, command, envp);
+	if (path)
+		execve(path, command, envp);
+	else
+	{
+		err = 127;
+		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
 	free(path);
 	ft_free_tab(command);
-	exit(EXIT_FAILURE);
+	exit(err);
 }
 
 void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 {
-	char		*path;
+	int		err;
+	char	*path;
 
+	err = 1;
 	dup2(fd[0], 0);
 	dup2(fd_outfile, 1);
 	close(fd[0]);
 	close(fd[1]);
 	path = get_path(command[1][0], envp);
-	execve(path, command[1], envp);
+	if (path)
+		execve(path, command[1], envp);
+	else
+	{
+		err = 127;
+		ft_putstr_fd(command[1][0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
 	free(path);
 	if (command[0])
 		ft_free_tab(command[0]);
 	ft_free_tab(command[1]);
-	exit(EXIT_FAILURE);
+	exit(err);
 }
 
 void	pipex(char **commands[2], int fd[2], char **envp)

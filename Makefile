@@ -6,7 +6,7 @@
 #    By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 15:10:33 by spoliart          #+#    #+#              #
-#    Updated: 2021/09/06 04:05:16 by spoliart         ###   ########.fr        #
+#    Updated: 2021/09/08 17:17:12 by spoliart         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,12 @@ SRCS =	pipex.c \
 		pipex_utils.c \
 		error.c
 
-DIR_SRCS = ./srcs/
-DIR_OBJS = ./objs/
+DIR_SRCS = srcs/
+DIR_OBJS = objs/
 OBJS = $(SRCS:%.c=$(DIR_OBJS)%.o)
 
-FLAGS = -Wall -Wextra -Werror
-LIBFT = libft/libft.a
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -Llibft -lft
 INC = -I includes/
 
 all: $(NAME)
@@ -35,11 +35,11 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@printf "\033[2K\r$(_GREEN) All pipex files compiled into '$(DIR_OBJS)'. $(_END)✅\n"
 	@make -C libft
-	@gcc $(FLAGS) $(OBJS) $(INC) $(LIBFT) -o $(NAME)
+	@gcc $(CFLAGS) $(OBJS) $(INC) -o $(NAME) $(LDFLAGS)
 	@printf "$(_GREEN) Binary '$(NAME)' created. $(_END)✅\n"
 
 $(DIR_OBJS)%.o: $(DIR_SRCS)%.c
-	@printf "$(_YELLOW)Compiling $< $(_END)⌛"
+	@printf "\033[2K\r$(_YELLOW)Compiling $< $(_END)⌛"
 	@gcc $(FLAGS) $(INC) -c $< -o $@
 
 $(OBJS): | $(DIR_OBJS)

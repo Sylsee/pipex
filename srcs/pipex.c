@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/23 23:31:58 by marvin           ###   ########.fr       */
+/*   Updated: 2021/09/24 00:57:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child(int fd[2], int fd_infile, char **command[2], char **envp)
 	{
 		err = 127;
 		ft_putstr_fd(command[0][0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putendl_fd(": command not found", 2);
 	}
 	free(path);
 	if (command[1])
@@ -56,7 +56,7 @@ void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 	{
 		err = 127;
 		ft_putstr_fd(command[1][0], 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_putendl_fd(": command not found", 2);
 	}
 	free(path);
 	if (command[0])

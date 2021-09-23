@@ -6,13 +6,13 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/06 03:48:39 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/09/23 23:24:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child(int fd[2], int fd_infile, char **command, char **envp)
+void	child(int fd[2], int fd_infile, char **command[2], char **envp)
 {
 	int		err;
 	char	*path;
@@ -22,17 +22,19 @@ void	child(int fd[2], int fd_infile, char **command, char **envp)
 	dup2(fd_infile, 0);
 	close(fd[0]);
 	close(fd[1]);
-	path = get_path(command[0], envp);
+	path = get_path(command[0][0], envp);
 	if (path)
-		execve(path, command, envp);
+		execve(path, command[0], envp);
 	else
 	{
 		err = 127;
-		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(command[0][0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
 	free(path);
-	ft_free_tab(command);
+	if (command[1])
+		ft_free_tab(command[1]);
+	ft_free_tab(command[0]);
 	exit(err);
 }
 
@@ -81,7 +83,7 @@ void	pipex(char **commands[2], int fd[2], char **envp)
 		exit(EXIT_FAILURE);
 	}
 	if (childPid == 0)
-		child(fd_pipe, fd[0], commands[0], envp);
+		child(fd_pipe, fd[0], commands, envp);
 	else
 		parent(fd_pipe, fd[1], commands, envp);
 }
@@ -96,10 +98,11 @@ int	main(int argc, char *argv[], char **envp)
 	fd[0] = open(argv[1], O_RDONLY);
 	fd[1] = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	if (fd[0] < 0)
-	{
-		ft_putstr_fd(argv[1], 1);
-		print_and_exit(": No such file or directory", 0);
-	}
+		print_error(argv[1]);
+	if (fd[1] < 0)
+		print_error(argv[4]);
+	if (fd[0] < 0 || fd[1] < 0)
+		exit(1);
 	args[0] = ft_split(argv[2], " ");
 	args[1] = ft_split(argv[3], " ");
 	pipex(args, fd, envp);

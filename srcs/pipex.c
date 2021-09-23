@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/23 23:24:45 by marvin           ###   ########.fr       */
+/*   Updated: 2021/09/23 23:31:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	child(int fd[2], int fd_infile, char **command[2], char **envp)
 	if (command[1])
 		ft_free_tab(command[1]);
 	ft_free_tab(command[0]);
+	close(fd_infile);
 	exit(err);
 }
 
@@ -61,6 +62,7 @@ void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 	if (command[0])
 		ft_free_tab(command[0]);
 	ft_free_tab(command[1]);
+	close(fd_outfile);
 	exit(err);
 }
 

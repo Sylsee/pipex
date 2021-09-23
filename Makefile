@@ -6,7 +6,7 @@
 #    By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/16 15:10:33 by spoliart          #+#    #+#              #
-#    Updated: 2021/09/08 17:17:12 by spoliart         ###   ########.fr        #
+#    Updated: 2021/09/23 23:33:29 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ $(DIR_OBJS):
 clean:
 	@make clean -C libft
 	@rm -rf $(DIR_OBJS)
-	@printf "$(_RED) '$(DIR_OBJS)' has been deleted. $(_END)🗑️\n"
+	@rm -f infile outfile
+	@printf "$(_RED) '$(DIR_OBJS)', 'infile' and 'outfile' has been deleted. $(_END)🗑️\n"
 
 fclean: clean
 	@make fclean -C libft

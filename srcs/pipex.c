@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/24 00:57:31 by marvin           ###   ########.fr       */
+/*   Updated: 2021/10/03 03:54:43 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 void	pipex(char **commands[2], int fd[2], char **envp)
 {
 	int		fd_pipe[2];
-	pid_t	childPid;
+	pid_t	child_pid;
 
 	if (pipe(fd_pipe) != 0)
 	{
@@ -77,14 +77,14 @@ void	pipex(char **commands[2], int fd[2], char **envp)
 		ft_free_tab(commands[1]);
 		exit(EXIT_FAILURE);
 	}
-	childPid = fork();
-	if (childPid == -1)
+	child_pid = fork();
+	if (child_pid == -1)
 	{
 		ft_free_tab(commands[0]);
 		ft_free_tab(commands[1]);
 		exit(EXIT_FAILURE);
 	}
-	if (childPid == 0)
+	if (child_pid == 0)
 		child(fd_pipe, fd[0], commands, envp);
 	else
 		parent(fd_pipe, fd[1], commands, envp);

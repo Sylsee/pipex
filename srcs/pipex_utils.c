@@ -6,13 +6,13 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 02:54:56 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/06 03:42:59 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/10/03 03:55:15 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*test_paths(char *cmd, char **paths, char *cmdCopy)
+static char	*test_paths(char *cmd, char **paths, char *cmd_copy)
 {
 	int		i;
 	char	*path;
@@ -25,23 +25,23 @@ static char	*test_paths(char *cmd, char **paths, char *cmdCopy)
 			return (path);
 		free(path);
 	}
-	if (access(cmdCopy, F_OK) == 0)
-		return (cmdCopy);
+	if (access(cmd_copy, F_OK) == 0)
+		return (cmd_copy);
 	return (NULL);
 }
 
 char	*get_path(char *cmd, char **environ)
 {
 	char	*path;
-	char	*cmdCopy;
+	char	*cmd_copy;
 	char	**paths;
 
-	cmdCopy = cmd;
+	cmd_copy = cmd;
 	cmd = ft_strjoin("/", cmd);
 	while (*environ && ft_strncmp(*environ, "PATH=", 5))
 		environ++;
 	paths = ft_split(*environ, "=:");
-	path = test_paths(cmd, paths, cmdCopy);
+	path = test_paths(cmd, paths, cmd_copy);
 	free(cmd);
 	ft_free_tab(paths);
 	if (path)

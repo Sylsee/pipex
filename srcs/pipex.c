@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/10/03 04:17:16 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/10/03 06:58:18 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	child(int fd[2], int fd_infile, char **command[2], char **envp)
 {
-	int		err;
 	char	*path;
 
-	err = 1;
 	dup2(fd[1], 1);
 	dup2(fd_infile, 0);
 	close(fd[0]);
@@ -26,25 +24,20 @@ void	child(int fd[2], int fd_infile, char **command[2], char **envp)
 	if (path)
 		execve(path, command[0], envp);
 	else
-	{
-		err = 127;
-		ft_putstr_fd(command[0][0], 2);
-		ft_putendl_fd(": command not found", 2);
-	}
-	free(path);
+		perror(command[0][0]);
+	if (path && !(ft_strncmp(path, "./", 2) == 0 || ft_strncmp(path, "/", 1) == 0))
+		free(path);
 	if (command[1])
 		ft_free_tab(command[1]);
 	ft_free_tab(command[0]);
 	close(fd_infile);
-	exit(err);
+	exit(return_code());
 }
 
 void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 {
-	int		err;
 	char	*path;
 
-	err = 1;
 	dup2(fd[0], 0);
 	dup2(fd_outfile, 1);
 	close(fd[0]);
@@ -53,17 +46,14 @@ void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 	if (path)
 		execve(path, command[1], envp);
 	else
-	{
-		err = 127;
-		ft_putstr_fd(command[1][0], 2);
-		ft_putendl_fd(": command not found", 2);
-	}
-	free(path);
+		perror(command[1][0]);
+	if (path && (ft_strncmp(path, "./", 2) || ft_strncmp(path, "/", 1)))
+		free(path);
 	if (command[0])
 		ft_free_tab(command[0]);
 	ft_free_tab(command[1]);
 	close(fd_outfile);
-	exit(err);
+	exit(return_code());
 }
 
 void	pipex(char **commands[2], int fd[2], char **envp)
@@ -92,6 +82,7 @@ void	pipex(char **commands[2], int fd[2], char **envp)
 
 int	main(int argc, char *argv[], char **envp)
 {
+	int		ret;
 	int		fd[2];
 	char	**args[2];
 

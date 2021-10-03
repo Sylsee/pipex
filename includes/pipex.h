@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:03:21 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/23 23:12:18 by marvin           ###   ########.fr       */
+/*   Updated: 2021/10/03 05:59:58 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
 char	*get_path(char *tmp, char **environ);
 void	print_and_exit(char *s, int err);
 void	print_error(char *s);
+int		return_code();
 
 #endif

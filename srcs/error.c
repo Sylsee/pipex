@@ -6,11 +6,21 @@
 /*   By: spoliart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 19:05:24 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/23 23:12:07 by marvin           ###   ########.fr       */
+/*   Updated: 2021/10/03 06:11:04 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	return_code()
+{
+	if (errno == ENOENT || errno == ENAMETOOLONG)
+		return (127);
+	else if (errno == EACCES)
+		return (126);
+	else if (errno == 0)
+		return (0);
+}
 
 void	print_and_exit(char *s, int err)
 {

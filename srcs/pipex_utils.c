@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 02:54:56 by spoliart          #+#    #+#             */
-/*   Updated: 2021/10/04 05:13:11 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/10/04 05:59:58 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*test_paths(char *cmd, char **paths)
 char	*test_simple_path(char *cmd, char **environ)
 {
 	if (access(cmd, X_OK) == 0)
-		return (cmd);
+		return (ft_strdup(cmd));
 	return (NULL);
 }
 

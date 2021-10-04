@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 08:28:42 by spoliart          #+#    #+#             */
-/*   Updated: 2021/10/04 05:31:09 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/10/04 06:03:54 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void	child(int fd[2], int fd_infile, char **command[2], char **envp)
 		execve(path, command[0], envp);
 	else
 		perror(command[0][0]);
-	if (path && path[0] && path[1]
-		&& ((path[0] != '.' && path[1] != '/') || path[0] != '/'))
-		free(path);
+	free(path);
 	if (command[0])
-		free(command[0]);
+		ft_free_tab(command[0]);
 	if (command[1])
 		ft_free_tab(command[1]);
 	close(fd_infile);
@@ -55,7 +53,7 @@ void	parent(int fd[2], int fd_outfile, char **command[2], char **envp)
 	if (command[0])
 		ft_free_tab(command[0]);
 	if (command[1])
-		free(command[1]);
+		ft_free_tab(command[1]);
 	close(fd_outfile);
 	exit(return_code());
 }

@@ -6,7 +6,7 @@
 /*   By: spoliart <spoliart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 00:51:44 by spoliart          #+#    #+#             */
-/*   Updated: 2021/09/05 19:43:36 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/10/04 05:36:42 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	if (tab)
+	if (tab && *tab)
 	{
 		while (tab[i])
 			free(tab[i++]);

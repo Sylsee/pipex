@@ -6,13 +6,13 @@
 /*   By: spoliart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 19:05:24 by spoliart          #+#    #+#             */
-/*   Updated: 2021/10/03 06:11:04 by spoliart         ###   ########.fr       */
+/*   Updated: 2021/10/04 05:25:10 by spoliart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	return_code()
+int	return_code(void)
 {
 	if (errno == ENOENT || errno == ENAMETOOLONG)
 		return (127);
